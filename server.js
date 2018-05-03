@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: 'Cs304funfunfun',
-	database: 'library'
+	database: 'jinjo'
 });
 
 connection.connect(function(err) {
