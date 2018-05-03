@@ -2,7 +2,7 @@
 module.exports = function(app) {
     app.route('/instructor')
         .post(addInstructor)
-        .put(updateInstructor);
+        .put(updatePassword);
 }
 
 var connection = require('../server').connection;
@@ -30,6 +30,37 @@ function addInstructor(request, response) {
   	});
 }
 
-function updateInstructor(request, response) {
+function updatePassword(request, response) {
+	var email = request.body.email;
+	var oldPassword = request.body.oldPassword;
+    var newPassword = request.body.newPassword;
 
+
+    var selectQuery = 'SELECT * FROM Instructor \
+    WHERE email ="' +email +'" AND password = "' +oldPassword +'"';
+
+	var updateQuery = 'UPDATE Instructor \
+    Set password="' +newPassword +'" \
+    WHERE email = "' +email +'"';
+
+    connection.query(selectQuery, function(error, rows, fields){
+    	if(!!error) {
+    		console.log('Error in the query\n');
+                response.status(422);
+                response.send('422 Unprocessable Entity');
+                return;
+            }
+     	else {
+      		connection.query(updateQuery, function(error, rows, fields){
+    			if(!!error) {
+    				console.log('Error in the query\n');
+             	   response.status(422);
+             	   response.send('422 Unprocessable Entity');
+             	   return;
+           		} else {
+     				response.send(rows);
+     			}
+  			});
+     	}
+  	});
 }
