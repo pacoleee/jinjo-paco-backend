@@ -2,7 +2,7 @@
 module.exports = function(app) {
     app.route('/instructor')
         .post(addInstructor)
-        .put(updatePassword);
+        .put(updatePassword)
         .get(loginInstructor);
 }
 
