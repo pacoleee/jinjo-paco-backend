@@ -3,6 +3,7 @@ module.exports = function(app) {
     app.route('/instructor')
         .post(addInstructor)
         .put(updatePassword);
+        .get(loginInstructor);
 }
 
 var connection = require('../server').connection;
@@ -63,4 +64,24 @@ function updatePassword(request, response) {
   			});
      	}
   	});
+}
+
+function loginInstructor(request, response) {
+    var email = request.body.email;
+    var oldPassword = request.body.password;
+
+    var selectQuery = 'SELECT * FROM Instructor \
+    WHERE email ="' +email +'" AND password = "' +password +'"';
+
+    connection.query(selectQuery, function(error, rows, fields){
+        if(!!error) {
+            console.log('Error in the query\n');
+                response.status(422);
+                response.send('422 Unprocessable Entity');
+                return;
+            }
+        else {
+            response.send(rows);
+        }
+    });
 }
