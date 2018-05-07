@@ -1,7 +1,7 @@
 //routes
 module.exports = function(app) {
 	app.route('/question')
-	.post(addQuestion);
+	.post(addQuestion)
 	.get(getQuestions);
 
 	app.route('/question/like/:id')
