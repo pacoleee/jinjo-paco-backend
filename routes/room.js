@@ -3,16 +3,15 @@ module.exports = function(app) {
     app.route('/room')
         .post(addRoom)
         .get(getRooms);
-
-    app.route('room/:id')
-    	.get(getRoom);
+    app.route('/room/:id')
+      .get(getRoom);
 }
 
 var connection = require('../server').connection;
 
 // API functions
 function addRoom(request, response) {
-	var instructorID = request.body.instructorID;
+	var instructorID = request.get("instructorID");
 	var roomName = request.body.roomName;
 
 	var query = 'INSERT INTO Room (instructorID, roomName) \
@@ -32,7 +31,7 @@ function addRoom(request, response) {
 }
 
 function getRooms(request, response) {
-	var instructorID = request.body.instructorID;
+	var instructorID = request.get("instructorID");
 
 	var query = 'SELECT * FROM ROOM WHERE instructorID = "' +instructorID +'"';
 
@@ -50,9 +49,10 @@ function getRooms(request, response) {
 }
 
 function getRoom(request, response) {
-	var roomID = request.params.roomID;
+	var roomID = request.params.id;
 
 	var query = 'SELECT * FROM ROOM WHERE roomID = "' +roomID +'"';
+  console.log(query);
 
 	connection.query(query, function(error, rows, fields){
     	if(!!error) {

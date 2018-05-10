@@ -3,7 +3,9 @@ module.exports = function(app) {
   app.route('/instructor')
   .post(addInstructor)
   .put(updatePassword)
-  .get(loginInstructor);
+
+  app.route('/instructor/login')
+  .post(loginInstructor);
 }
 
 var connection = require('../server').connection;
@@ -15,8 +17,6 @@ function addInstructor(request, response) {
 
 	var query = 'INSERT INTO Instructor (email, password) \
   Values ("' +email +'", "' +password +'")';
-
-  console.log(query);
 
   connection.query(query, function(error, rows, fields){
    if(!!error) {
@@ -68,10 +68,11 @@ function loginInstructor(request, response) {
   var email = request.body.email;
   var password = request.body.password;
 
-  var selectQuery = 'SELECT * FROM Instructor \
+  var query = 'SELECT * FROM Instructor \
   WHERE email ="' +email +'" AND password = "' +password +'"';
 
-  connection.query(selectQuery, function(error, rows, fields){
+  console.log(query);
+  connection.query(query, function(error, rows, fields){
     if(!!error) {
       console.log('Error in the query\n');
       response.status(422);
