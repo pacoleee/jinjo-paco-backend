@@ -52,7 +52,6 @@ function getRoom(request, response) {
 	var roomID = request.params.id;
 
 	var query = 'SELECT * FROM ROOM WHERE roomID = "' +roomID +'"';
-  console.log(query);
 
 	connection.query(query, function(error, rows, fields){
     	if(!!error) {

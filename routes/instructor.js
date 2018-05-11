@@ -71,7 +71,6 @@ function loginInstructor(request, response) {
   var query = 'SELECT * FROM Instructor \
   WHERE email ="' +email +'" AND password = "' +password +'"';
 
-  console.log(query);
   connection.query(query, function(error, rows, fields){
     if(!!error) {
       console.log('Error in the query\n');
