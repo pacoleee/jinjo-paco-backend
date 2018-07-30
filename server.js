@@ -27,21 +27,14 @@ connection.connect(function(err) {
 
 io.on('connection', function(socket){
 	socket.on('joining room', (roomID) => {
-      	console.log('Joining Room :', roomID);
-      	if(!clientConnections.hasOwnProperty(roomID)) {
-      		clientConnections[roomID] = [socket];
-      	} else {
-      		clientConnections[roomID].push[socket];
-      	}
-   	});
+    console.log('Joining Room :', roomID);
+  	socket.join(roomID);
+  });
 
-   	socket.on('disconnect', (roomID) => {
-   		console.log('user disconnected');
-   		if(clientConnections.hasOwnProperty(roomID)) {
-   			var room = clientConnections[roomID];
-    		room.splice(room.indexOf(socket), 1);	
-    	}
-  	});
+  socket.on('disconnect', (roomID) => {
+    console.log('user disconnected');
+    socket.leave(roomID);
+  });
 });
 
 exports.connection = connection;

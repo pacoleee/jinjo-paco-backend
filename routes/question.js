@@ -50,10 +50,7 @@ function addQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
-			var roomConnections = clientConnections[roomID];
-			for(var socket in roomConnections) {
-				io.to(socket.id).emit('refresh questions', '');
-			}
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
@@ -74,10 +71,7 @@ function likeQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
-			var roomConnections = clientConnections[roomID];
-			for(var socket in roomConnections) {
-				io.to(socket.id).emit('refresh questions', '');
-			}
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
@@ -98,10 +92,7 @@ function answerQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
-			var roomConnections = clientConnections[roomID];
-			for(var socket in roomConnections) {
-				io.to(socket.id).emit('refresh questions', '');
-			}
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
