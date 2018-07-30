@@ -14,6 +14,8 @@ module.exports = function(app) {
 }
 
 var connection = require('../server').connection;
+var io = require('../server').io;
+var clientConnections = require('../server').clientConnections;
 
 // API functions
 function getQuestions(request, response) {
@@ -48,6 +50,7 @@ function addQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
@@ -55,6 +58,7 @@ function addQuestion(request, response) {
 
 function likeQuestion(request, response) {
 	var questionID = request.params.questionID;
+	var roomID = request.body.roomID;
 
 	var query = 'UPDATE Question \
 	SET upvotes = upvotes + 1 \
@@ -67,6 +71,7 @@ function likeQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
@@ -74,6 +79,7 @@ function likeQuestion(request, response) {
 
 function answerQuestion(request, response) {
 	var questionID = request.params.questionID;
+	var roomID = request.body.roomID;
 
 	var query = 'UPDATE Question \
 	SET isAnswered = 1 \
@@ -86,6 +92,7 @@ function answerQuestion(request, response) {
 			response.send('422 Unprocessable Entity');
 			return;
 		} else {
+			io.in(roomID).emit('refresh questions', '');
 			response.send(rows);
 		}
 	});
