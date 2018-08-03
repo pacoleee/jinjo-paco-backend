@@ -10,7 +10,7 @@ var io = require('socket.io')(server);
 var clientConnections = {};
 
 var connection = mysql.createConnection({
-	host: 'localhost',
+	host: 'jinjo.cutm9ankje3d.us-west-2.rds.amazonaws.com',
 	user: 'root',
 	password: 'Cs304funfunfun',
 	database: 'jinjo'

@@ -33,7 +33,7 @@ function addRoom(request, response) {
 function getRooms(request, response) {
 	var instructorID = request.get("instructorID");
 
-	var query = 'SELECT * FROM ROOM WHERE instructorID = "' +instructorID +'"';
+	var query = 'SELECT * FROM Room WHERE instructorID = "' +instructorID +'"';
 
 	connection.query(query, function(error, rows, fields){
     	if(!!error) {
@@ -51,7 +51,7 @@ function getRooms(request, response) {
 function getRoom(request, response) {
 	var roomID = request.params.id;
 
-	var query = 'SELECT * FROM ROOM WHERE roomID = "' +roomID +'"';
+	var query = 'SELECT * FROM Room WHERE roomID = "' +roomID +'"';
 
 	connection.query(query, function(error, rows, fields){
     	if(!!error) {
